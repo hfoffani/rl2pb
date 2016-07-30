@@ -18,24 +18,13 @@ from datetime import date, datetime, timedelta
 from os import path
 import pytz
 
-DEFAULT_EXPORT_TYPE = 'pb' # pb, md or all
+DEFAULT_EXPORT_TYPE = 'md' # pb, md or all
 PINBOARD_API_KEY = 'herchu:3E8F2B33A03B738641A4' # https://pinboard.in/settings/password
-BOOKMARKS_MARKDOWN_FILE = '~/Dropbox/Reading List Bookmarks.markdown' # Markdown file if using md export
+BOOKMARKS_MARKDOWN_FILE = 'Reading List Bookmarks.markdown' # Markdown file if using md export
 BOOKMARKS_PLIST = os.path.join(os.environ['HOME'], 'Library/Safari/Bookmarks.plist')
 
 bookmarksFile = os.path.expanduser(BOOKMARKS_PLIST)
 markdownFile = os.path.expanduser(BOOKMARKS_MARKDOWN_FILE)
-
-# Make a copy of the bookmarks and convert it from a binary plist to text
-# tempDirectory = gettempdir()
-# copy(bookmarksFile, tempDirectory)
-# bookmarksFileCopy = os.path.join(tempDirectory, os.path.basename(bookmarksFile))
-
-def removeTempFile():
-    #os.remove(bookmarksFileCopy)
-    pass
-
-atexit.register(removeTempFile) # Delete the temp file when the script finishes
 
 class _readingList():
     def __init__(self, exportType):
@@ -46,12 +35,6 @@ class _readingList():
         if self.exportType == 'pb':
             import pinboard
             self.pb = pinboard.Pinboard(PINBOARD_API_KEY)
-
-        #converted = subprocess.call(['plutil', '-convert', 'xml1', bookmarksFileCopy])
-        #
-        #if converted != 0:
-        #    print('Couldn\'t convert bookmarks plist from xml format')
-        #    sys.exit(converted)
 
         with open(BOOKMARKS_PLIST, 'rb') as plist_file:
             plist = plistlib.load(plist_file)
@@ -142,7 +125,7 @@ class _readingList():
 
 if __name__ == "__main__":
     exportTypes = []
-    if len(sys.argv):
+    if len(sys.argv) > 1:
         for arg in sys.argv:
             if re.match("^(md|pb|all)$",arg) and exportTypes.count(arg) == 0:
                 exportTypes.append(arg)
