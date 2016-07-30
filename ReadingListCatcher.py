@@ -3,8 +3,7 @@
 # - A script for exporting Safari Reading List items to Markdown and Pinboard
 #   Brett Terpstra 2015
 # Uses code from <https://gist.github.com/robmathers/5995026>
-# Requires Python pinboard lib for Pinboard.in import:
-#     `easy_install pinboard` or `pip install pinboard`
+
 import plistlib
 from shutil import copy
 import subprocess
