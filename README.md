@@ -5,7 +5,8 @@ pip install pinboard pytz
 
 Usage:
 
-python ReadingListCatcher.py
+workon rl2pb
+python ReadingListCatcher.py pb
 
 
 Credits:

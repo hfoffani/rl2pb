@@ -43,7 +43,10 @@ class _readingList():
 
         if self.exportType == 'pb':
             lastRLBookmark = self.pb.posts.recent(tag='.readinglist', count=1)
-            last = lastRLBookmark['date']
+            if len(list(lastRLBookmark['posts'])) == 0:
+                last = datetime(2013,1,1)
+            else:
+                last = lastRLBookmark['date']
         else:
             self.content = ''
             self.newcontent = ''
